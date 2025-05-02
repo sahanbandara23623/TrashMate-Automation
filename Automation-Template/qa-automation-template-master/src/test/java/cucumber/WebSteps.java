@@ -217,11 +217,15 @@ public class WebSteps {
 
     @Given("I generate a random mobile number to the {string}")
     public void iGenerateARandomMobileNumber(String p_number) {
-        generatedNumber = "07" + (new Random().nextInt(900000000) + 100000000);
+        Random rand = new Random();
+        int suffix = 10000000 + rand.nextInt(90000000); // 8 digits
+        generatedNumber = "07" + suffix; // total 10 digits
         System.out.println("Generated Mobile Number: " + generatedNumber);
+
         By element = constructElement(findElementRepo(p_number));
-        driver.findElement(element).sendKeys(String.valueOf(generatedNumber));
+        driver.findElement(element).sendKeys(generatedNumber);
     }
+
 
     @Given("I generate a random email address to the {string}")
     public void iGenerateARandomEmailAddress(String random_Mail) {
@@ -256,6 +260,31 @@ public class WebSteps {
     public void i_press_down_arrow_and_enter() {
         pressDownArrowAndEnter(driver);
     }
+
+    @When("I press the up arrow key")
+    public void i_press_up_arrow_key() {
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.ARROW_UP).perform();
+    }
+
+    @When("I press the Enter key")
+    public void i_press_enter_key() {
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.ENTER).perform();
+    }
+
+    @When("I press the up arrow key a random number of times")
+    public void i_press_up_arrow_key_random_times() {
+        Random random = new Random();
+        int times = random.nextInt(50) + 1; // Generates a number between 1 and 50
+        System.out.println("Pressing UP arrow " + times + " times");
+
+        Actions actions = new Actions(driver);
+        for (int i = 0; i < times; i++) {
+            actions.sendKeys(Keys.ARROW_UP).perform();
+        }
+    }
+
 
 
 
