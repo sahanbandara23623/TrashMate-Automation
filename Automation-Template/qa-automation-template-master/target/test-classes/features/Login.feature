@@ -18,4 +18,4 @@ Feature: Login Feature
     And I click on "Login_Submit"
     And I wait few seconds
     And I wait few seconds
-    And I wait few seconds
+
