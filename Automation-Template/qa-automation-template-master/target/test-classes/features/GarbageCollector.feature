@@ -78,7 +78,7 @@ Feature: Garbage Collector Feature
     And I click on "Waste_Option_second_Multi"
     And I wait few seconds
     When I press the down arrow key
-    And I click on "Cardboard_Option"
+    And I click on "Multi_Cardboard"
     And I wait few seconds
     And I click on "Weight_Input"
     And I wait few seconds
@@ -93,7 +93,7 @@ Feature: Garbage Collector Feature
     And I wait few seconds
     When I press the down arrow key
     When I press the down arrow key
-    And I click on "Polythene_Option"
+    And I click on "Multi_Polythene"
     And I wait few seconds
     And I click on "Weight_Input"
     And I wait few seconds
