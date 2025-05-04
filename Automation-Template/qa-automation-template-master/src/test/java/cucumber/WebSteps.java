@@ -41,6 +41,13 @@ public class WebSteps {
 
     private Scenario scenario;
 
+    private static final String[] streets = {
+            "Main St", "Oak Ave", "Pine Rd", "Cedar Blvd", "Maple Dr", "Elm St", "Lakeview Rd"
+    };
+    private static final String[] cities = {
+            "Springfield", "Riverside", "Fairview", "Greenville", "Franklin", "Madison", "Clinton"
+    };
+
 
     @Before
     public void setup(Scenario scenario){
@@ -256,6 +263,48 @@ public class WebSteps {
     public void i_press_down_arrow_and_enter() {
         pressDownArrowAndEnter(driver);
     }
+
+    public String generateRandomAddress() {
+        Random random = new Random();
+        int streetNumber = 100 + random.nextInt(900);
+        String street = streets[random.nextInt(streets.length)];
+        String city = cities[random.nextInt(cities.length)];
+        int zip = 10000 + random.nextInt(90000);
+        return streetNumber + " " + street + ", " + city + ", " + zip;
+    }
+
+    @When("I type a random address into the field {string}")
+    public void i_type_random_address_into_field(String locatorKey) {
+        By locator = constructElement(findElementRepo(locatorKey));
+        WebElement addressField = driver.findElement(locator);
+        addressField.clear();
+        addressField.sendKeys(generateRandomAddress());
+    }
+
+
+    @When("I enter {string} into the {string} field")
+    public void iEnterIntoTheField(String value, String fieldName) {
+        if (fieldName.equalsIgnoreCase("Card_Number")) {
+            // Switch to the iframe containing the card input
+            WebElement iframe = driver.findElement(By.cssSelector("iframe[name*='cardNumber'], iframe[src*='card']"));
+            driver.switchTo().frame(iframe);
+
+            // Enter the card number
+            WebElement cardNumberInput = driver.findElement(By.xpath("//input[@name='cardnumber']"));
+            cardNumberInput.sendKeys(value);
+
+            // Return to the main page
+            driver.switchTo().defaultContent();
+        }
+    }
+
+    @When("I just type {string}")
+    public void i_just_type(String text) {
+        Actions actions = new Actions(driver);
+        actions.sendKeys(text).perform();
+    }
+
+
 
 
 
